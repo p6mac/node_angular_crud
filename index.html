@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Products</title>
+        <link rel="stylesheet" type="text/css" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <script type="text/javascript" src="/node_modules/angular/angular.min.js"></script>
+        <script type="text/javascript" src="/node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script type="text/javascript" src="/public/app.js"></script>
+        <script type="text/javascript" src="/public/app.service.js"></script>
+        <script type="text/javascript" src="/public/app.controller.js"></script>
+    </head>
+    <body ng-app="myShoppingCart">
+        <div class="container" ng-controller="mainController">
+            <div class="content">
+                <center><h1>My Products</h1>
+                <form >
+                    <fieldset>
+                        <div class="form-group">
+                            <label>Product Name</label>
+                            <input type="text" class="form-control" placeholder="Product Name" ng-model="data.prod_name">
+                        </div>
+                        <div class="form-group">
+                            <label>Product Cost</label>
+                            <input type="text"class="form-control" placeholder="Product Cost" ng-model="data.prod_cost">
+
+                        </div>
+                        <button type="submit" class="btn btn-primary" ng-click="addProduct()">Add Product</button>
+                    </fieldset>
+                </form>
+
+                <hr>
+                <table class="table table-bordered">
+                    <thead>
+                        <th> ID </th>
+                        <th> Product Name</th>
+                        <th> Product Cost</th>
+                        <th> Action</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="product in products">
+                            <td>{{ $index + 1 }}</td> 
+                            <td>{{product.prod_name}}</td>
+                            <td>{{product.prod_cost}}</td>
+                            <td><button class="btn btn-warning" ng-click="updateProduct(product.id)">UPDATE</button>
+                                <button class="btn btn-danger" ng-click="deleteProduct(product.id)">DELETE</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                </center>
+            </div>
+        </div>
+    </body>
+</html>
