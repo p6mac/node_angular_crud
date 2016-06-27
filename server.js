@@ -1,85 +1,39 @@
-var express = require('express'),
-	bodyParser = require('body-parser'),
-	path = require('path'),
-	Products = require('./models/products')
-
+var express = require('express');
+var crypto = require('crypto');
+var	bodyParser = require('body-parser');
+var	path = require('path');
+var multer = require('multer');
+var jwt = require('jsonwebtoken');
+var config = require('config');
+var	router = require('./routes/routes');
 var app = express();
-var port = process.env.PORT || 3000;
-var router = express.Router();
+var	port = process.env.PORT || 3000;
+var storage = multer.diskStorage({
+  				destination: function (req, file, cb) {
+    				cb(null, path.normalize('public/assets/images/'));
+  				},
+  				filename: function (req, file, cb) {
+    	crypto.pseudoRandomBytes(16, function (err, raw) {
+      if (err) return cb(err)
+      cb(null, 'images-' + Date.now() + path.extname(file.originalname))
+    })
+  }
+});
+var upload = multer({ storage: storage });
 
-app.use(bodyParser.urlencoded({ extended: true} ));
+
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(upload.single('file'));
 app.use('/public',express.static(__dirname+ '/public'));
 app.use('/node_modules',express.static(__dirname+ '/node_modules'));
-
-
-router.get("/products", function(req,res){
-			Products.findAll().then(function(data){
-				res.json(data);
-			});	
-		});
-
-router.get("/showproduct/:id", function(req,res){
-		var id = req.params.id;
-		Products.find({
-				where : {
-					id : id
-				}
-			}).then(function(data){
-			if(data != null) {
-				res.json(data);	
-			} else {
-				res.json("No Data Found");
-			}	
-		});
-	});
-
-router.post("/addproduct", function(req,res) {
-			Products.create({
- 			"prod_name" : req.body.prod_name,
- 			"prod_cost" : req.body.prod_cost,
- 			"createdAt" : new Date().getFullYear(),
- 			"updatedAt" : new Date().getFullYear()
-			}).then(function(data){
-				res.json(data);
-			})
-		});
-
-router.delete("/deleteproduct/:id", function(req,res){
-		var id = req.params.id;
-		Products.destroy({
-			where  : {
-				id : id
-			}
-		}).then(function(data){
-			res.json("Successfully Deleted");
-		});
-});
-
-router.put("/updateproduct/:id", function(req,res){
-		Products.update({
-			"prod_name" : req.body.prod_name,
-			"prod_cost" : req.body.prod_cost,
-			"createdAt" : new Date().getFullYear(),
-			"updatedAt" : new Date().getFullYear(),
-		},{
-			where : {
-				id : req.params.id
-			}
-		}).then(function(data){
-			res.json(data);
-		});
-	});
-
 app.use('/api', router);
 
 app.get("/", function(req,res){
 	res.sendFile(path.join(__dirname + '/index.html'));
 });
 
-// app.get("/addproduct", function(req,res){
-// 	res.sendFile(path.join(__dirname + '/addProduct.html'));
-// });
 
 app.listen(port);
 console.log('Starting....');
+console.log('Visit at localhost:'+ port);

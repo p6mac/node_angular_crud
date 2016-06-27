@@ -3,6 +3,10 @@
 		"host" 	: "localhost",
 		"user" 	: "root",
 		"password" : "",
-		"database" : "mywebsitedb" 
+		"database" : "mywebsitedb"
+	},
+
+	"token" : {
+		"secret" : "keithminetteganalongo"
 	}
 }

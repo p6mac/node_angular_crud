@@ -1,0 +1,58 @@
+
+        <!-- Page Header -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">List Of Products
+                </h1>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Projects Row -->
+        <div class="row">
+            <div class="col-md-3 col-lg-3 portfolio-item" ng-repeat="product in products">
+                <img 
+                    class="img-responsive" 
+                    ng-src="/public/assets/images/{{product.file_name}}" 
+                    alt="{{product.file_name}}" 
+                    width="700px" height="400px">
+                <div class="caption-full">
+                <h4 class="pull-right"> <b>$ {{product.prod_cost}} </b> </h4>
+                <h5> <a ui-sref="view_product({ pid : product.id})">{{product.prod_name}}</a> </h5>
+                <p>{{product.description}}</p>
+                </div>
+            </div>  
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Pagination -->
+        <!-- <div class="row text-center">
+            <div class="col-lg-12">
+                <ul class="pagination">
+                    <li>
+                        <a href="#">&laquo;</a>
+                    </li>
+                    <li class="active">
+                        <a href="#">1</a>
+                    </li>
+                    <li>
+                        <a href="#">2</a>
+                    </li>
+                    <li>
+                        <a href="#">3</a>
+                    </li>
+                    <li>
+                        <a href="#">4</a>
+                    </li>
+                    <li>
+                        <a href="#">5</a>
+                    </li>
+                    <li>
+                        <a href="#">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+        </div> -->
+        <!-- /.row -->

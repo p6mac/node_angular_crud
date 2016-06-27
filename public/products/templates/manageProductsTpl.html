@@ -1,0 +1,150 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">Manage Products</div>
+  <div class="panel-body">
+    <button class="btn btn-primary" ng-click="addShowForm()" > Add Product</button>
+    <br>
+    <br>
+  	<table class="table table-bordered">
+  		<thead>
+  			<th>ID</th>
+  			<th>Product Name</th>
+        <th>Description </th>
+        <th>Status</th>
+  			<th>Price</th>
+        <th>Quantity</th>
+        
+  			<th>Action</th>
+  		</thead>
+  		<tbody>
+  			<tr ng-repeat="product in products">
+  				<td> {{ $index + 1}}</td>
+  				<td class="col-lg-2"> {{ product.prod_name }}</td>
+          <td class="col-lg-5"> {{ product.description}}</td>
+          <td>  {{product.status}}</td>
+  				<td> $ {{ product.prod_cost }}</td>
+          <td> {{ product.prod_quantity }}</td>
+  				<td> <button class="btn btn-warning" ng-click="showForm(product.id)">Update</button>
+  					 <button class="btn btn-danger" ng-click="deleteProduct(product.id)"> Delete</button></td>
+  			</tr>
+  		</tbody>
+  	</table>
+    <div class="panel panel-primary" ng-show="addForm">
+  <div class="panel-heading">
+      Adding a Product
+        <button style="float: right;" class="btn btn-info" ng-click="hideForm()">x</button>
+  </div>
+  <div class="panel-body">
+    <form class="form-horizontal" enctype="multipart/form-data">
+      <div class="form-group">
+        <label class="control-label col-sm-2" >Name</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" placeholder="Enter Product Name" ng-model="data.prod_name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">Description</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" rows="3" ng-model="data.description"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">Status</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="data.status">
+            <option>Available</option>
+            <option>Out Of Stock</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">Price</label>
+        <div class="col-sm-10"> 
+          <input type="number" class="form-control" placeholder="Enter Product Cost" ng-model="data.prod_cost">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">Quantity:</label>
+        <div class="col-sm-10"> 
+          <input type="number" class="form-control" placeholder="Enter Product Quantity" ng-model="data.prod_quantity">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" >Image</label>
+        <div class="col-sm-10">
+          <input type="file" class="form-control" file-model="data.file">
+        </div>
+      </div>
+      <div class="form-group"> 
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-default" ng-click="addProduct()">Add Product</button>
+        </div>
+      </div>
+    </form>
+    <div class="alert alert-success" ng-show="successAdd">
+      <strong>Success!</strong> This product is successfully added to the database.
+    </div>
+  </div>
+</div>
+  	<div class="panel panel-primary" ng-show="updateForm">
+  		<div class="panel-heading">
+      		Update a Product
+      		<button style="float: right;" class="btn btn-info" ng-click="hideForm()">x</button>
+  		</div>
+  		<div class="panel-body">
+    		<form class="form-horizontal" role="form">
+      <div class="form-group">
+        <label class="control-label col-sm-2" >Name</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" placeholder="Enter Product Name" ng-model="newdata.prod_name">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">Description</label>
+        <div class="col-sm-10">
+          <textarea class="form-control" rows="3" ng-model="newdata.description"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" >Status</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="newdata.status">
+            <option>Available</option>
+            <option>Out Of Stock</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">Price</label>
+        <div class="col-sm-10"> 
+          <input type="number" class="form-control" placeholder="Enter Product Cost" ng-model="newdata.prod_cost">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2">Quantity:</label>
+        <div class="col-sm-10"> 
+          <input type="number" class="form-control" placeholder="Enter Product Quantity" ng-model="newdata.prod_quantity">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-sm-2" >Image</label>
+        <div class="col-sm-10">
+          <input type="file" class="form-control" file-model="newdata.file">
+        </div>
+      </div>
+      <div class="form-group"> 
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-default" ng-click="updateProduct(newdata.id)">Update Product</button>
+        </div>
+      </div>
+    </form>
+
+    		<div class="alert alert-success" ng-show="successUpdate">
+      			<strong>Success!</strong> This product is successfully updated to the database.
+    		</div>
+  		</div>
+	</div>
+	<div class="alert alert-success" ng-show="successDelete">
+      	<strong>Success!</strong> This product is successfully removed to the database.
+    </div>
+  </div>
+</div>
